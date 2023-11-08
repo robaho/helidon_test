@@ -1,0 +1,30 @@
+plugins {
+    id 'java' 
+}
+
+repositories {
+    mavenCentral() 
+}
+
+dependencies {
+    implementation 'io.helidon.webserver:helidon-webserver:4.0.0'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+task runSimpleFileServer() { 
+    dependsOn build
+    doLast {
+        mkdir 'fileserver'
+        javaexec {
+            classpath sourceSets.main.runtimeClasspath
+            main "SimpleFileServer"
+            args = ['fileserver','8888','fileserver/logfile.txt']
+            // debug true
+        }
+    }
+}
