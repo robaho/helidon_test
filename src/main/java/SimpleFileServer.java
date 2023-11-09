@@ -1,7 +1,6 @@
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import io.helidon.http.HeaderNames;
@@ -22,7 +21,7 @@ public class SimpleFileServer {
                                 ServerResponse response) throws IOException {
             long size = Long.parseLong(request.query().first("size").orElseThrow());
             byte[] buffer = new byte[1024 * 1024];
-            response.headers().set(HeaderNames.CONTENT_TYPE, "application/octet-stream");
+            response.header(HeaderNames.CONTENT_TYPE, "application/octet-stream");
             response.status(200);
             response.contentLength(size);
             OutputStream os = response.outputStream();
